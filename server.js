@@ -9,9 +9,9 @@ var fs = require("fs");
 var path = require("path");
 var bodyParser = require("body-parser");
 var router = express.Router();
-require('dotenv').config({ path: '.env' });
 const mongoose = require('mongoose');
 
+require('dotenv').config({ path: '.env' });
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, () => {console.log("Connected to Database")})
 .catch(err => console.log(err));
 
@@ -26,7 +26,7 @@ var enableCORS = function(req, res, next) {
     var origin = req.headers.origin;
     if (!process.env.XORIGIN_RESTRICT || allowedOrigins.indexOf(origin) > -1) {
       console.log(req.method);
-      res.set({
+      res.set({ 
         "Access-Control-Allow-Origin": origin,
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Access-Control-Allow-Headers":

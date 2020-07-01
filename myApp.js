@@ -40,12 +40,21 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const personSchema = new Schema({
-  name: { type: String, required: true },
-  age: Number,
-  favoriteFoods: [String]
+  name: { 
+    type: String, 
+    required: true 
+  },
+  age: { 
+    type: Number
+  },
+  favoriteFoods:[
+    {
+    type:[String]
+    }
+   ]
 });
 
-const Person = mongoose.model("Person", personSchema);
+const Person = mongoose.model('Person', personSchema);
 
 // **Note**: Glitch is a real server, and in real servers interactions with
 // the db are placed in handler functions, to be called when some event happens
@@ -77,8 +86,22 @@ const Person = mongoose.model("Person", personSchema);
 // function like this as the last argument.
 
 var createAndSavePerson = function(done) {
-  done(null /*, data*/);
+  const person = new Person({
+    name: 'Florin',
+    age: 25,
+    favoriteFoods: ['avocado']
+  });
+
+  person.save((err, data) => { 
+  console.log(data);
+    if(err) {
+      done(err);
+  }
+  done(null, data);
+    
+  })
 };
+              
 
 /** 4) Create many People with `Model.create()` */
 
@@ -266,3 +289,4 @@ exports.createManyPeople = createManyPeople;
 exports.removeById = removeById;
 exports.removeManyPeople = removeManyPeople;
 exports.queryChain = queryChain;
+
